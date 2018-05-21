@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ConstraintLayout_main_weatherContainer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorPrimary">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/Lottie_main_weatherAnim"
+            app:lottie_fileName="sunMoonAnim.json"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/TextView_main_currentCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ConstraintLayout_main_weatherContainer"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:id="@+id/TextView_main_currentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ConstraintLayout_main_weatherContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:theme="@style/textSubtitle" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/ConstraintLayout_main_infoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ConstraintLayout_main_weatherContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        android:minHeight="60dp">
+
+
+        <LinearLayout
+            android:id="@+id/LinearLayout_main_descriptionContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/TextView_main_weatherDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:theme="@style/textRegular" />
+
+            <TextView
+                android:id="@+id/TextView_main_temperatureValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/TextView_main_weatherDescription"
+                android:theme="@style/textTempValue" />
+
+
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/Lottie_main_loadingAnim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:lottie_fileName="loadingAnimation.json" />
+
+    <Button
+        android:id="@+id/Button_mainDEV_AnimateWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        android:layout_marginBottom="60dp"
+        android:text="CHANGE TIME OF THE DAY" />
+
+
+    <Button
+        android:id="@+id/Button_mainDEV_LoadWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        android:layout_marginBottom="60dp"
+        android:text="LOAD DATA" />
+
+
+</android.support.constraint.ConstraintLayout>

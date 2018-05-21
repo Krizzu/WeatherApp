@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="textParent">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:color">@color/colorText</item>
+    </style>
+
+    <style name="textHeadline" parent="textParent">
+        <item name="android:textSize">24sp</item>
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="textTitle" parent="textParent">
+        <item name="fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="textRegular" parent="textParent">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="textSubtitle" parent="textParent">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="textTempValue" parent="textParent">
+        <item name="android:textSize">52sp</item>
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+
+</resources>
