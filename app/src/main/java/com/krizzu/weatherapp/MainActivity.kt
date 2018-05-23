@@ -123,13 +123,6 @@ class MainActivity : AppCompatActivity() {
         bindService(timeServiceIntent, localServiceConnection, Context.BIND_AUTO_CREATE)
     }
 
-    private fun updateTime(newTime: String) {
-        println("FIRED UPDATE")
-        runOnUiThread {
-            currentTime.text = newTime
-        }
-    }
-
     private fun runUI() {
         setupTimeService()
         loadingAnimation.pauseAnimation()
@@ -208,6 +201,13 @@ class MainActivity : AppCompatActivity() {
     inner class LocalServiceConnection : ServiceConnection {
         override fun onServiceConnected(componentName: ComponentName, binder: IBinder?) {
             val b = binder as TimeService.LocalBinder
+
+            fun updateTime(newTime: String) {
+                runOnUiThread {
+                    currentTime.text = newTime
+                }
+            }
+
             timeService = b.getService()
             binder.subscribeToTimeUpdate(::updateTime)
         }

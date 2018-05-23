@@ -32,6 +32,11 @@ build/
 captures/
 output.json
 
+# Share code styling
+!/.idea/codeStyles/
+
 #NDK
 obj/
 .externalNativeBuild
+
+app/libs/
