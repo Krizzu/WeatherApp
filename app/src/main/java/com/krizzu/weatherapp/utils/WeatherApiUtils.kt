@@ -9,6 +9,8 @@ data class ApiWeatherResponse(private val weatherStatus: JSONObject) {
 
 data class ApiTempResponse(private val tempStatus: JSONObject) {
     val temp: Int = tempStatus.getInt("temp")
+    val tempMin: Int = tempStatus.getInt("temp_min")
+    val tempMax: Int = tempStatus.getInt("temp_max")
 }
 
 data class ApiPlaceResponse(private val placeInfo: JSONObject, val city: String) {

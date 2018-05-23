@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var weatherDescriptionContainer: LinearLayout
 
     private lateinit var tempValue: TextView
+    private lateinit var minTempValue: TextView
+    private lateinit var maxTempValue: TextView
+
     private lateinit var tempDesc: TextView
     private lateinit var currentTime: TextView
     private lateinit var currentCity: TextView
@@ -81,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         TODO(General: Need to handle bigger screen sizes - use dimensions folder for that)
         TODO(General: Update weather on intervals [maybe sync it in a service]
         TODO(General: App crashlytics, analytics?)
+        TODO(General: Use Retrofit for http requests)
 
         TODO(WeatherContainer: Add background like in the designs (for day and night))
         TODO(WeatherContainer: Add float button for changing options: city (maybe from google maps?), time zone [based on city])
@@ -105,6 +109,8 @@ class MainActivity : AppCompatActivity() {
         weatherDescriptionContainer = findViewById(R.id.LinearLayout_main_descriptionContainer)
 
         tempValue = findViewById(R.id.TextView_main_temperatureValue)
+        minTempValue = findViewById(R.id.TextView_main_minTempValue)
+        maxTempValue = findViewById(R.id.TextView_main_maxTempValue)
         tempDesc = findViewById(R.id.TextView_main_weatherDescription)
         currentTime = findViewById(R.id.TextView_main_currentTime)
         currentCity = findViewById(R.id.TextView_main_currentCity)
@@ -127,6 +133,9 @@ class MainActivity : AppCompatActivity() {
 
         tempValue.text = "${weatherStatus.temp.temp}°C"
         tempDesc.text = weatherStatus.weather.description
+
+        minTempValue.text = "L ${weatherStatus.temp.tempMin}°C"
+        maxTempValue.text = "H ${weatherStatus.temp.tempMax}°C"
 
         currentCity.text = "${weatherStatus.place.city}, ${weatherStatus.place.country}"
 
@@ -165,7 +174,6 @@ class MainActivity : AppCompatActivity() {
         loadingAnimation.scale = 3f
         loadingAnimation.loop(true)
         loadingAnimation.playAnimation()
-
 
         val apiKey = getString(R.string.weatherApiKey)
 
