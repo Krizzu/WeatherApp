@@ -1,7 +1,12 @@
 package com.krizzu.weatherapp
 
 import android.animation.AnimatorInflater
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -10,12 +15,11 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
+import com.krizzu.weatherapp.services.TimeService
 import com.krizzu.weatherapp.utils.WeatherStatus
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,7 +42,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var changeTimeOfTheDay: Button
     private lateinit var loadData: Button
 
+    // animation values
     private var isDayMode = true
+
+    // Time service
+    private val localServiceConnection = LocalServiceConnection()
+    private var timeService: TimeService? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +96,11 @@ class MainActivity : AppCompatActivity() {
          */
     }
 
+    override fun onDestroy() {
+        unbindService(localServiceConnection)
+        super.onDestroy()
+    }
+
     private fun prepareReferences() {
         weatherStatusContainer = findViewById(R.id.ConstraintLayout_main_weatherContainer)
         tempStatusContainer = findViewById(R.id.ConstraintLayout_main_infoContainer)
@@ -104,18 +118,24 @@ class MainActivity : AppCompatActivity() {
         loadData = findViewById(R.id.Button_mainDEV_LoadWeather)
     }
 
-    private fun updateTime() {
-        val calendar = Calendar.getInstance()
-        val timeFormatter = SimpleDateFormat("HH:MM", Locale("PL"))
-        currentTime.text = timeFormatter.format(calendar.time)
+    private fun setupTimeService() {
+        val timeServiceIntent = Intent(this, TimeService::class.java)
+        bindService(timeServiceIntent, localServiceConnection, Context.BIND_AUTO_CREATE)
+    }
+
+    private fun updateTime(newTime: String) {
+        println("FIRED UPDATE")
+        runOnUiThread {
+            currentTime.text = newTime
+        }
     }
 
     private fun runUI() {
+        setupTimeService()
         loadingAnimation.pauseAnimation()
 
         tempValue.text = "${weatherStatus.temp.temp}°C"
         tempDesc.text = weatherStatus.weather.description
-        updateTime()
 
         loadingAnimation.visibility = View.GONE
         loadData.visibility = View.GONE
@@ -183,5 +203,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupStatusBar() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+    }
+
+    inner class LocalServiceConnection : ServiceConnection {
+        override fun onServiceConnected(componentName: ComponentName, binder: IBinder?) {
+            val b = binder as TimeService.LocalBinder
+            timeService = b.getService()
+            binder.subscribeToTimeUpdate(::updateTime)
+        }
+
+        override fun onServiceDisconnected(componentName: ComponentName) {
+            timeService = null
+        }
     }
 }

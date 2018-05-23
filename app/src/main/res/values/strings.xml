@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <string name="service_TimeService_description">Syncing time in Weather App</string>
     <string name="text_loading">Loading</string>
 </resources>
