@@ -9,15 +9,15 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/ConstraintLayout_main_weatherContainer"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/height_main_weatherContainerHeight"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/colorPrimary">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/Lottie_main_weatherAnim"
+            android:layout_width="@dimen/size_main_sunMoonElementSize"
             app:lottie_fileName="sunMoonAnim.json"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
 

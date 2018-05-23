@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="height_main_weatherContainerHeight">250dp</dimen>
+
+    <dimen name="size_main_sunMoonElementSize">180dp</dimen>
+</resources>

@@ -79,10 +79,8 @@ class MainActivity : AppCompatActivity() {
 
         TODO(General: APP crashing on startup without internet connection) [because of TODO in error handler]
         TODO(General: Need to handle bigger screen sizes - use dimensions folder for that)
-        TODO(General: Update app info (weather, time etc.) on intervals
+        TODO(General: Update weather on intervals [maybe sync it in a service]
         TODO(General: App crashlytics, analytics?)
-        TODO(General: post it on github, write an article about process)
-
 
         TODO(WeatherContainer: Add background like in the designs (for day and night))
         TODO(WeatherContainer: Add float button for changing options: city (maybe from google maps?), time zone [based on city])
