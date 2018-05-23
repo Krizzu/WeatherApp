@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Main dimens-->
     <dimen name="height_main_weatherContainerHeight">200dp</dimen>
 
+    <!--View dimens-->
     <dimen name="size_main_sunMoonElementSize">200dp</dimen>
+
+    <!--Text sizes / small dimens-->
+    <dimen name="textSize_textStyles_headlineSize">20sp</dimen>
+    <dimen name="textSize_textStyles_titleSize">20sp</dimen>
+    <dimen name="textSize_textStyles_regularSize">16sp</dimen>
+    <dimen name="textSize_textStyles_subtitleSize">14sp</dimen>
+    <dimen name="textSize_textStyles_tempValueSize">64sp</dimen>
 </resources>
