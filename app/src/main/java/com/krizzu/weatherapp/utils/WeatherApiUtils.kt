@@ -11,7 +11,12 @@ data class ApiTempResponse(private val tempStatus: JSONObject) {
     val temp: Int = tempStatus.getInt("temp")
 }
 
+data class ApiPlaceResponse(private val placeInfo: JSONObject, val city: String) {
+    val country: String = placeInfo.getString("country")
+}
+
 data class WeatherStatus(private val response: JSONObject) {
     val weather = ApiWeatherResponse(response.getJSONArray("weather")[0] as JSONObject)
     val temp = ApiTempResponse(response.getJSONObject("main"))
+    val place = ApiPlaceResponse(response.getJSONObject("sys"), response.getString("name"))
 }

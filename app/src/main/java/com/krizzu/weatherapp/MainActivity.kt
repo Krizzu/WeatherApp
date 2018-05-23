@@ -128,6 +128,8 @@ class MainActivity : AppCompatActivity() {
         tempValue.text = "${weatherStatus.temp.temp}°C"
         tempDesc.text = weatherStatus.weather.description
 
+        currentCity.text = "${weatherStatus.place.city}, ${weatherStatus.place.country}"
+
         loadingAnimation.visibility = View.GONE
         loadData.visibility = View.GONE
 
@@ -163,8 +165,6 @@ class MainActivity : AppCompatActivity() {
         loadingAnimation.scale = 3f
         loadingAnimation.loop(true)
         loadingAnimation.playAnimation()
-
-        currentCity.text = city.toUpperCase()
 
 
         val apiKey = getString(R.string.weatherApiKey)
