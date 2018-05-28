@@ -24,6 +24,11 @@
         <item name="android:textSize">@dimen/textSize_textStyles_subtitleSize</item>
     </style>
 
+    <style name="textError" parent="textParent">
+        <item name="android:textColor">#F00</item>
+        <item name="android:textSize">@dimen/textSize_textStyles_regularSize</item>
+    </style>
+
     <style name="textTempValue" parent="textParent">
         <item name="android:textSize">@dimen/textSize_textStyles_tempValueSize</item>
         <item name="fontFamily">@font/roboto_bold</item>

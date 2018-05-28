@@ -80,11 +80,10 @@ class MainActivity : AppCompatActivity() {
 
         To do list:
 
-        TODO(General: APP crashing on startup without internet connection) [because of TODO in error handler]
         TODO(General: Need to handle bigger screen sizes - use dimensions folder for that)
         TODO(General: Update weather on intervals [maybe sync it in a service]
         TODO(General: App crashlytics, analytics?)
-        TODO(General: Use Retrofit for http requests)
+        TODO(General: Move to fragments)
 
         TODO(WeatherContainer: Add background like in the designs (for day and night))
         TODO(WeatherContainer: Add float button for changing options: city (maybe from google maps?), time zone [based on city])
@@ -127,9 +126,21 @@ class MainActivity : AppCompatActivity() {
         bindService(timeServiceIntent, localServiceConnection, Context.BIND_AUTO_CREATE)
     }
 
+    private fun toggleAnimation(startAnimation: Boolean = true) {
+        if (startAnimation) {
+            loadingAnimation.visibility = View.VISIBLE
+            loadingAnimation.scale = 3f
+            loadingAnimation.loop(true)
+            loadingAnimation.playAnimation()
+        } else {
+            loadingAnimation.pauseAnimation()
+            loadingAnimation.visibility = View.GONE
+        }
+    }
+
     private fun runUI() {
         setupTimeService()
-        loadingAnimation.pauseAnimation()
+        toggleAnimation(startAnimation = false)
 
         tempValue.text = "${weatherStatus.temp.temp}°C"
         tempDesc.text = weatherStatus.weather.description
@@ -139,7 +150,6 @@ class MainActivity : AppCompatActivity() {
 
         currentCity.text = "${weatherStatus.place.city}, ${weatherStatus.place.country}"
 
-        loadingAnimation.visibility = View.GONE
         loadData.visibility = View.GONE
 
         currentCity.visibility = View.VISIBLE
@@ -170,10 +180,35 @@ class MainActivity : AppCompatActivity() {
         isDayMode = !nightMode
     }
 
+    private fun handleError(errorMessage: String?) {
+        val errorContainer = findViewById<LinearLayout>(R.id.LinearLayout_main_errorContainer)
+        val errorView = findViewById<TextView>(R.id.TextView_main_errorMessage)
+        val retryButton = findViewById<Button>(R.id.Button_main_retryButton)
+
+        if (errorMessage != null) {
+
+            retryButton.setOnClickListener {
+                sendWeatherRequest()
+            }
+
+            errorView.text = errorMessage
+            toggleAnimation(startAnimation = false)
+            errorContainer.visibility = View.VISIBLE
+            errorView.visibility = View.VISIBLE
+
+        } else {
+            retryButton.setOnClickListener(null)
+            toggleAnimation()
+            errorView.text = ""
+            errorView.visibility = View.GONE
+            errorContainer.visibility = View.GONE
+        }
+
+    }
+
     private fun sendWeatherRequest(city: String = "Wroclaw") {
-        loadingAnimation.scale = 3f
-        loadingAnimation.loop(true)
-        loadingAnimation.playAnimation()
+        toggleAnimation()
+        handleError(null)
 
         val apiKey = getString(R.string.weatherApiKey)
 
@@ -185,17 +220,26 @@ class MainActivity : AppCompatActivity() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call?, e: IOException?) {
-                println("XXX - FAIL WITH CALL")
-
+                runOnUiThread {
+                    handleError(e?.message)
+                }
             }
 
             override fun onResponse(call: Call?, response: Response?) {
-                val res = JSONObject(response?.body()?.string())
 
-                weatherStatus = WeatherStatus(res)
-                runOnUiThread {
-                    loadData.visibility = View.VISIBLE
+                if (response?.isSuccessful == true) {
+                    val res = JSONObject(response.body()?.string())
+
+                    weatherStatus = WeatherStatus(res)
+                    runOnUiThread {
+                        loadData.visibility = View.VISIBLE
+                    }
+                } else {
+                    runOnUiThread {
+                        handleError("Error: ${response?.message()}")
+                    }
                 }
+
             }
         })
     }
