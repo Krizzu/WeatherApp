@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/LinearLayout_main_weatherDisplayContainer"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_main_weatherContainerHeight"
+    android:orientation="vertical"
+    android:weightSum="3"
+    android:background="@color/colorPrimary">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/Lottie_main_weatherAnim"
+        android:layout_width="@dimen/size_main_sunMoonElementSize"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        app:lottie_fileName="sunMoonAnim.json" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:layout_weight="1"
+        android:src="@drawable/ic_grass_art" />
+
+
+</LinearLayout>
