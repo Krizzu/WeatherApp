@@ -1,180 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    android:id="@+id/ConstraintLayout_main_mainContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/ConstraintLayout_main_weatherContainer"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_main_weatherContainerHeight"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
-        android:background="@color/colorPrimary">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:src="@drawable/ic_grass_art"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/Lottie_main_weatherAnim"
-            android:layout_width="@dimen/size_main_sunMoonElementSize"
-            app:lottie_fileName="sunMoonAnim.json"
-            android:layout_height="wrap_content" />
-
-
-    </android.support.constraint.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/TextView_main_currentCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ConstraintLayout_main_weatherContainer"
-        app:layout_constraintRight_toRightOf="parent"
-        android:visibility="gone"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp" />
-
-    <TextView
-        android:id="@+id/TextView_main_currentTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ConstraintLayout_main_weatherContainer"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:visibility="gone"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:theme="@style/textSubtitle" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/ConstraintLayout_main_infoContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ConstraintLayout_main_weatherContainer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:visibility="gone"
-        android:minHeight="60dp">
-
-
-        <LinearLayout
-            android:id="@+id/LinearLayout_main_descriptionContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <TextView
-                android:id="@+id/TextView_main_weatherDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:textAlignment="center"
-                android:theme="@style/textRegular" />
-
-            <TextView
-                android:id="@+id/TextView_main_temperatureValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/TextView_main_weatherDescription"
-                android:theme="@style/textTempValue" />
-
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/TextView_main_maxTempValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/textRegular"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:text="L 23" />
-
-                <TextView
-                    android:id="@+id/TextView_main_minTempValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/textRegular"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:text="H 42" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-    </android.support.constraint.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/LinearLayout_main_errorContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/TextView_main_errorMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:theme="@style/textError" />
-
-        <Button
-            android:id="@+id/Button_main_retryButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Retry" />
-    </LinearLayout>
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/Lottie_main_loadingAnim"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:lottie_fileName="loadingAnimation.json" />
-
-    <Button
-        android:id="@+id/Button_mainDEV_AnimateWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:visibility="gone"
-        android:layout_marginBottom="60dp"
-        android:text="CHANGE TIME OF THE DAY" />
+    android:orientation="vertical">
 
 
     <Button
         android:id="@+id/Button_mainDEV_LoadWeather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:visibility="gone"
-        android:layout_marginBottom="60dp"
         android:text="LOAD DATA" />
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
