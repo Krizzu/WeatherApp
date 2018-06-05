@@ -8,11 +8,20 @@
     android:orientation="vertical">
 
 
-    <Button
-        android:id="@+id/Button_mainDEV_LoadWeather"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LOAD DATA" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/Button_mainDEV_LoadWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="LOAD DATA" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

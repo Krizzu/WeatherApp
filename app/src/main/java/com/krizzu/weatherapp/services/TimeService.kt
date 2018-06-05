@@ -58,6 +58,7 @@ class TimeService : Service() {
 
         fun subscribeToTimeUpdate(callback: (currentDate: String) -> Unit) {
             callbacksList.add(0, callback)
+            callback(getCurrentTime())
         }
     }
 

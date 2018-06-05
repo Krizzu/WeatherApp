@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.airbnb.lottie.LottieAnimationView
 import com.krizzu.weatherapp.R
 import com.krizzu.weatherapp.utils.WeatherStatus
 import okhttp3.*
@@ -18,10 +19,12 @@ import java.io.IOException
 class FragmentWeatherInfo : Fragment() {
 
     private lateinit var mainContainer: LinearLayout
+    private lateinit var temperatureContainer: LinearLayout
     private lateinit var weatherCondition: TextView
     private lateinit var weatherValue: TextView
     private lateinit var currentTime: TextView
     private lateinit var currentCity: TextView
+    private lateinit var loadingAnim: LottieAnimationView
 
     lateinit var weatherResponse: WeatherStatus
 
@@ -32,11 +35,15 @@ class FragmentWeatherInfo : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_weather_info, container!!, false)
 
-        mainContainer = view.findViewById(R.id.LinearLayout_main_weatherInfoContainer)
-        weatherCondition = view.findViewById(R.id.TextView_main_weatherStatus)
-        weatherValue = view.findViewById(R.id.TextView_main_temperatureValue)
-        currentTime = view.findViewById(R.id.TextView_main_currentTime)
-        currentCity = view.findViewById(R.id.TextView_main_currentCity)
+        mainContainer =
+                view.findViewById(R.id.LinearLayout_FragmentWeatherInfo_weatherInfoContainer)
+        temperatureContainer =
+                view.findViewById(R.id.LinearLayout_FragmentWeatherInfo_TempContainer)
+        loadingAnim = view.findViewById(R.id.Lottie_FragmentWeatherInfo_Loading)
+        weatherCondition = view.findViewById(R.id.TextView_FragmentWeatherInfo_weatherStatus)
+        weatherValue = view.findViewById(R.id.TextView_FragmentWeatherInfo_temperatureValue)
+        currentTime = view.findViewById(R.id.TextView_FragmentWeatherInfo_currentTime)
+        currentCity = view.findViewById(R.id.TextView_FragmentWeatherInfo_currentCity)
 
         return view
     }
@@ -46,7 +53,6 @@ class FragmentWeatherInfo : Fragment() {
 
         // TODO(Fetching: Read arguments from fragment transaction to get city name)
         fetchCurrentWeather()
-        runTimeService()
     }
 
     override fun onDestroy() {
@@ -59,6 +65,9 @@ class FragmentWeatherInfo : Fragment() {
 
     private fun setWeatherStatus() {
         activity?.runOnUiThread {
+            mainContainer.removeView(loadingAnim)
+            temperatureContainer.visibility = View.VISIBLE
+
             weatherValue.text = "${weatherResponse.temp.temp}°C"
             weatherCondition.text = weatherResponse.weather.description
         }
@@ -70,12 +79,11 @@ class FragmentWeatherInfo : Fragment() {
         }
     }
 
-
     private fun handleError(errorMessage: String?) {
         val act = activity
         // call context's interface on error
-        if (act != null && act is WeatherRequestHandler) {
-            act.errorHandler(errorMessage)
+        if (act is WeatherRequestHandler) {
+            act.onWeatherRequestError(errorMessage)
         }
     }
 
@@ -87,7 +95,7 @@ class FragmentWeatherInfo : Fragment() {
 
     private fun runTimeService() {
         val act = activity
-        if (act != null && act is TimeServiceHandler) {
+        if (act is TimeServiceHandler) {
             act.setupTimeService(::updateTime)
         }
     }
@@ -112,6 +120,7 @@ class FragmentWeatherInfo : Fragment() {
                     weatherResponse = WeatherStatus(res)
                     setWeatherStatus()
                     setCity()
+                    runTimeService()
                 } else {
                     handleError(response?.message())
                 }
@@ -119,13 +128,12 @@ class FragmentWeatherInfo : Fragment() {
             }
         })
     }
-
-
 }
 
-
 interface WeatherRequestHandler {
-    fun errorHandler(errorMessage: String?)
+    fun onWeatherRequestError(errorMessage: String?)
+
+    fun onWeatherRequestRetry()
 }
 
 interface TimeServiceHandler {
