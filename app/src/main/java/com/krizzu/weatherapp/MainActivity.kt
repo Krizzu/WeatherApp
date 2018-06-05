@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity(), WeatherRequestHandler, TimeServiceHand
         super.onCreate(savedInstanceState)
         setupStatusBar()
         setContentView(R.layout.activity_main)
-        prepareReferences()
+        loadData = findViewById(R.id.Button_mainDEV_LoadWeather)
+
         toggleLoadingAnimation()
 
 
@@ -74,12 +75,32 @@ class MainActivity : AppCompatActivity(), WeatherRequestHandler, TimeServiceHand
         super.onDestroy()
     }
 
-    override fun errorHandler(errorMessage: String?) {
+    override fun onWeatherRequestRetry() {
+        onWeatherRequestError(null)
+        toggleLoadingAnimation(true)
+
+        loadData.visibility = View.VISIBLE
+
+        runUI()
+    }
+
+    override fun onWeatherRequestError(errorMessage: String?) {
         toggleLoadingAnimation(false)
 
         if (errorMessage != null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.ConstraintLayout_main_mainContainer, FragmentError(), "ERROR")
+
+            val removingTrans = supportFragmentManager.beginTransaction()
+            supportFragmentManager.fragments.forEach {
+                removingTrans.remove(it)
+            }
+
+            val errorFragment = FragmentError()
+            val args = Bundle()
+            args.putString("error", errorMessage)
+            errorFragment.arguments = args
+
+            removingTrans
+                .add(R.id.ConstraintLayout_main_mainContainer, errorFragment, "ERROR")
                 .commit()
         } else {
             val fragment = supportFragmentManager.findFragmentByTag("ERROR")
@@ -90,11 +111,6 @@ class MainActivity : AppCompatActivity(), WeatherRequestHandler, TimeServiceHand
             }
 
         }
-    }
-
-
-    private fun prepareReferences() {
-        loadData = findViewById(R.id.Button_mainDEV_LoadWeather)
     }
 
     override fun setupTimeService(cb: ((String) -> Unit)?) {
@@ -108,6 +124,12 @@ class MainActivity : AppCompatActivity(), WeatherRequestHandler, TimeServiceHand
             timeServiceListener = null
             unbindService(localServiceConnection)
         }
+    }
+
+    private fun runUI() {
+        setupWeatherDisplay()
+        toggleLoadingAnimation(startAnimation = false)
+        initCurrentWeather()
     }
 
     private fun setupWeatherDisplay() {
@@ -142,16 +164,10 @@ class MainActivity : AppCompatActivity(), WeatherRequestHandler, TimeServiceHand
         }
     }
 
-    private fun runUI() {
-        setupWeatherDisplay()
-        toggleLoadingAnimation(startAnimation = false)
-        initCurrentWeather()
-    }
-
     // TODO(Fragment: use city, pass it as arg to fragment)
     private fun initCurrentWeather(city: String = "Wroclaw") {
         loadData.visibility = View.GONE
-        errorHandler(null)
+        onWeatherRequestError(null)
 
         supportFragmentManager
             .beginTransaction()

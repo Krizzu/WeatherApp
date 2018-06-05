@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    android:id="@+id/LinearLayout_main_weatherInfoContainer"
+    android:id="@+id/LinearLayout_FragmentWeatherInfo_weatherInfoContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -17,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/TextView_main_currentTime"
+            android:id="@+id/TextView_FragmentWeatherInfo_currentTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,23 +25,33 @@
             android:theme="@style/textSubtitle" />
 
         <TextView
-            android:id="@+id/TextView_main_currentCity"
+            android:id="@+id/TextView_FragmentWeatherInfo_currentCity"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAlignment="textEnd"
             android:paddingEnd="10dp"
             android:theme="@style/textSubtitle" />
-
     </LinearLayout>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/Lottie_FragmentWeatherInfo_Loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:lottie_fileName="loadingAnimation.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true" />
+
     <LinearLayout
+        android:id="@+id/LinearLayout_FragmentWeatherInfo_TempContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
+
 
         <TextView
-            android:id="@+id/TextView_main_weatherStatus"
+            android:id="@+id/TextView_FragmentWeatherInfo_weatherStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -50,7 +60,7 @@
             android:theme="@style/textRegular" />
 
         <TextView
-            android:id="@+id/TextView_main_temperatureValue"
+            android:id="@+id/TextView_FragmentWeatherInfo_temperatureValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
