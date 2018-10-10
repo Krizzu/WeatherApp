@@ -1,5 +1,7 @@
 ## Weather App
 
+Simple Weather App example written in Kotlin.
+
 ### Getting started
 
 1. Get [OpenWeatherMap](https://openweathermap.org/appid) api key 
